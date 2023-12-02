@@ -26,13 +26,14 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             width: 300px;
+            text-align: center;
         }
         label {
             display: block;
             margin-bottom: 8px;
         }
         input {
-            width: 100%;
+            width: calc(100% - 16px);
             padding: 8px;
             margin-bottom: 16px;
             box-sizing: border-box;
@@ -44,6 +45,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            width: 100%;
         }
         button:hover {
             background-color: #45a049;
@@ -68,7 +70,7 @@
 </head>
 <body>
 
-<h1>Controle de Viagem para Porto Seguro - Reinião dos Pombos</h1>
+<h1>Controle de Viagem para Porto Seguro</h1>
 
 <form id="paymentForm">
     <label for="name">Nome:</label>
@@ -97,6 +99,11 @@
 </table>
 
 <script>
+    // Recupera os dados do localStorage ao carregar a página
+    window.onload = function() {
+        loadSavedData();
+    };
+
     function addPayment() {
         var name = document.getElementById("name").value;
         var paymentAmount = document.getElementById("paymentAmount").value;
@@ -117,6 +124,21 @@
 
         // Limpar o formulário após adicionar o pagamento
         document.getElementById("paymentForm").reset();
+
+        // Salva os dados no localStorage
+        saveData();
+    }
+
+    function saveData() {
+        var tableRows = document.getElementById("paymentTableBody").innerHTML;
+        localStorage.setItem("paymentData", tableRows);
+    }
+
+    function loadSavedData() {
+        var savedData = localStorage.getItem("paymentData");
+        if (savedData) {
+            document.getElementById("paymentTableBody").innerHTML = savedData;
+        }
     }
 </script>
 
